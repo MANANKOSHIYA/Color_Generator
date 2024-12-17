@@ -1,0 +1,256 @@
+previousColor() {
+    // Decrease the current color index 
+    this.currentColorIndex--;
+    // Ensure the index stays within bounds
+    if (this.currentColorIndex < 0) {
+      this.currentColorIndex = this.color.length - 1;
+    }
+    // Call a function to display the current color
+    this.displayCurrentColor();
+  }
+
+  
+  nextColor() {
+    // Increase the current color index 
+    this.currentColorIndex++;
+    // Ensure the index stays within bounds
+    if (this.currentColorIndex >= this.color.length) {
+      this.currentColorIndex = 0;
+    }
+    // Call a function to display the current color
+    this.displayCurrentColor();
+  }
+
+  displayCurrentColor() {
+    // Update color1, color2, and color3 properties based on the current color index
+    const storedColors = JSON.parse(localStorage.getItem('Color') || '[]');
+    // Calculate the index of the previous color
+    let previousColorIndex = this.currentColorIndex - 1;
+    // Ensure the index loops back to the last color if it goes below 0
+    if (previousColorIndex < 0) {
+      previousColorIndex = storedColors.length - 1;
+    }
+    // Get the previous color
+    const lastColor = storedColors[previousColorIndex];
+    // Update the color properties
+    this.color1 = lastColor.color1;
+    this.color2 = lastColor.color2;
+    this.color3 = lastColor.color3;
+
+
+  }
+
+
+// simple  logic with id 
+
+//   currentColorId: number = 1; // Set the initial current color id
+
+// // Function to display the previous color
+// previousColor() {
+//   this.currentColorId = this.currentColorId === 1 ? this.color.length  : this.currentColorId - 1;
+//   this.displayCurrentColor();
+// }
+
+// // Function to display the next color
+// nextColor() {
+//   this.currentColorId = this.currentColorId === this.color.length ? 1 : this.currentColorId + 1;
+//   this.displayCurrentColor();
+// }
+
+// // Function to display the current color
+// displayCurrentColor() {
+//   const storedColors = JSON.parse(localStorage.getItem('Color') || '[]');
+//   const currentColor = storedColors.find((color: { id: number; }) => color.id === this.currentColorId);
+//   if (currentColor) {
+//     this.color1 = currentColor.color1;
+//     this.color2 = currentColor.color2;
+//     this.color3 = currentColor.color3;
+//   } else {
+//     // Handle the case when the color with the current id is not found
+//     console.error(`Color with id ${this.currentColorId} not found.`);
+//   }
+// }
+
+
+// hard logic with id 
+ 
+// currentColorId: number = 1; // Initialize with the first color's ID
+
+// previousColor() {
+//     this.currentColorId--;
+//     if (this.currentColorId < 1) { // Assuming IDs start from 1
+//         this.currentColorId = this.color.length;
+//     }
+//     this.displayCurrentColor();
+// }
+
+// nextColor() {
+//     this.currentColorId++;
+//     if (this.currentColorId > this.color.length) {
+//         this.currentColorId = 1;
+//     }
+//     this.displayCurrentColor();
+// }
+
+// displayCurrentColor() {
+//     const storedColors = JSON.parse(localStorage.getItem('Color') || '[]');
+//     const currentColor = storedColors.find((color: { id: number; }) => color.id === this.currentColorId);
+//     if (currentColor) {
+//         this.color1 = currentColor.color1;
+//         this.color2 = currentColor.color2;
+//         this.color3 = currentColor.color3;
+//     }
+// }
+
+
+
+  // hard  logic with index
+
+
+  // currentColorIndex: number = 0;
+
+  // previousColor() {
+  //   this.currentColorIndex--;
+  //   if (this.currentColorIndex < 0) {
+  //     this.currentColorIndex = this.color.length - 1;
+  //   }
+  //   this.displayCurrentColor();
+  // }
+  // nextColor() {
+
+  //   this.currentColorIndex++;
+  //   if (this.currentColorIndex >= this.color.length) {
+  //     this.currentColorIndex = 0;
+  //   }
+  //   this.displayCurrentColor();
+  // }
+
+  // displayCurrentColor() {
+
+  //   const storedColors = JSON.parse(localStorage.getItem('Color') || '[]');
+  //   let previousColorIndex = this.currentColorIndex - 1;
+  //   if (previousColorIndex < 0) {
+  //     previousColorIndex = storedColors.length - 1;
+  //   }
+  //   const lastColor = storedColors[previousColorIndex];
+  //   this.color1 = lastColor.color1;
+  //   this.color2 = lastColor.color2;
+  //   this.color3 = lastColor.color3;
+
+  // }
+
+
+
+  //<----main--->
+
+  import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+  title = 'my-first-project';
+  letters = '0123456789ABCDEF';
+  color: { id: number, color1: string, color2: string, color3: string }[] = [];
+  color1!: string;
+  color2: string | undefined;
+  color3: string | undefined;
+  getColor: any;
+  previous: any;
+  currentColorId: any;
+
+  ngOnInit(): void {
+
+}
+  constructor(private route: ActivatedRoute) { }
+
+
+  checkColorPosition(){
+  
+  }
+  getRandomColor() {
+
+    if ( this.currentColorId == 0 ){
+      this.getRandomColor()
+     }else{
+        if ( this.currentColorId < this.color.length) {
+           this.currentColorId ++ ;
+           this.displayCurrentColor();
+    
+           if (this.currentColorId == this.color.length){
+            this.getRandomColor()
+           }
+        }
+      }
+    this.color1 = '#';
+    this.color2 = '#';
+    this.color3 = '#';
+    for (var i = 0; i < 6; i++) {
+      this.color1 += this.letters[Math.floor(Math.random() * 16)];
+      this.color2 += this.letters[Math.floor(Math.random() * 16)];
+      this.color3 += this.letters[Math.floor(Math.random() * 16)];
+    }
+
+    const generatedColor = {
+      id: this.color.length + 1,
+      color1: this.color1,
+      color2: this.color2,
+      color3: this.color3
+    };
+
+    this.color.push(generatedColor);
+    console.log("Colors==>", this.color);
+    localStorage.setItem('Color', JSON.stringify(this.color));
+
+    this.getColorFromLocalStorage()
+    this.currentColorId = this.color.length;
+  }
+
+  getColorFromLocalStorage() {
+    const Colors2 = JSON.parse(localStorage.getItem('Color') || '[]');
+    this.getColor = Colors2;
+
+  }
+
+  ClearData() {
+    localStorage.clear();
+    window.location.reload();
+  }
+
+ 
+  previousColor() {
+    this.currentColorId--;
+   
+    this.displayCurrentColor();
+  }
+
+  nextColor() {
+    this.currentColorId++;
+
+    this.displayCurrentColor();
+  }
+
+  displayCurrentColor() {
+    const storedColors = JSON.parse(localStorage.getItem('Color') || '[]');
+    let currentColor = storedColors.find((color: { id: number; }) => color.id === this.currentColorId );
+
+    if (this.currentColorId < 1) {
+       currentColor = storedColors.find((color: { id: number; }) => color.id === this.currentColorId + 1 );
+    }
+    if (currentColor) {
+      this.color1 = currentColor.color1;
+      this.color2 = currentColor.color2;
+      this.color3 = currentColor.color3;
+    }
+  
+    if (currentColor === 1) {
+      return;
+    }
+  }
+
+}
+

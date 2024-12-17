@@ -1,0 +1,68 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <div class="color-generator">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="history">
+                        <h2>{{title}}</h2>
+                        <hr class="line">
+                        <div class="history-show">
+                            <div class="history-box">
+                                <div class="history-item">
+                                    <div class="slider-responsive">
+                                        <div>
+                                            <div class="smcircle" *ngFor="let getClr of getColor">
+                                                <div class="bg-color" [style.background-color]="getClr.id === currentColorId ? BGcolor : '' ">
+                                                    <div class="smcircle-1" [style.background-color]="getClr.color1"></div>
+                                                    <div class="smcircle-2" [style.background-color]="getClr.color2"></div>
+                                                    <div class="smcircle-3" [style.background-color]="getClr.color3"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+
+                            <div class="clear-btn">
+                                <button type="button" (click)="ClearData()">Clear Data</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="show-color">
+                        <div class="circle">
+                            <div class="circle-1" [style.background-color]="color1">
+                                <div class="color-name" [style.color]="color1">{{color1}}</div>
+                            </div>
+                            <div class="circle-2" [style.background-color]="color2">
+                                <div class="color-name" [style.color]="color2">{{color2}}</div>
+                            </div>
+                            <div class="circle-3" [style.background-color]="color3">
+                                <div class="color-name" [style.color]="color3">{{color3}}</div>
+                            </div>
+                        </div>
+                        <div class="show-color-btn">
+                            <button type="button" (click)="previousColor()">Previous</button>
+                            <button type="button" (click)="getRandomColor()">Generator</button>
+                            <button type="button" (click)="nextColor()">Next</button>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
